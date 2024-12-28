@@ -1,16 +1,16 @@
 import { Request, Response } from "express"
-import UserQuery, { CreateUserQueryInput } from "../../queries/user"
+import UserQuery from "../../queries/user"
 import bcrypt from "bcrypt"
 import { User } from "@prisma/client"
 import { generateAccessToken, generateRefreshToken } from "../../helpers/token"
 import RefreshTokenQuery from "../../queries/refreshToken"
 
-export default async function (req: Request<{}, {}, { name: User["name"]; password: User["password"] }>, res: Response) {
-   const { name, password } = req.body
+export default async function (req: Request<{}, {}, { email: User["email"]; password: User["password"] }>, res: Response) {
+   const { email, password } = req.body
    const query = new UserQuery()
 
-   const user = await query.readByNameAndPassword({
-      name,
+   const user = await query.readByEmailAndPassword({
+      email,
       password
    })
 
@@ -24,8 +24,8 @@ export default async function (req: Request<{}, {}, { name: User["name"]; passwo
       return
    }
 
-   const accessToken = generateAccessToken({ user, expiresIn: "15m" })
-   const refreshToken = generateRefreshToken({ user, expiresIn: "7d" })
+   const accessToken = generateAccessToken({ userId: user.id, expiresIn: "15m" })
+   const refreshToken = generateRefreshToken({ userId: user.id, expiresIn: "7d" })
 
    const refreshTokenQuery = new RefreshTokenQuery()
 

@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express"
 import expressContext from "express-request-context"
+import cookieParser from "cookie-parser"
 
 import consola from "consola"
 
@@ -17,32 +18,36 @@ import updatePostController from "./controllers/posts/update"
 
 import { logger } from "./middlewares/logger"
 import { authentificate } from "./middlewares/authentificate"
-import cookieParser from "cookie-parser"
+import { registerSchema } from "./schemas/users/register"
+import { validateBody } from "./middlewares/validation"
+import { loginSchema } from "./schemas/users/login"
+import bodyParser from "body-parser"
 
 const app = express()
 
-const port = 3004
+const port = process.env.API_PORT || 3000
 
-app.use(cookieParser())
+app.use(bodyParser.json())
 app.use(expressContext())
+app.use(cookieParser())
 
 app.use(logger)
 
 app.get("/healthcheck", healthcheckController)
 
-app.route("/register").get(registerUserController)
-app.route("/login").post(loginUserController)
+app.route("/register").post(validateBody(registerSchema), registerUserController)
+app.route("/login").post(validateBody(loginSchema), loginUserController)
 app.route("/refresh-token").get(refreshTokenController)
 
-app.route("/users/:id").get(getUserController)
-app.route("/users/:id").delete(deleteUserController)
+app.route("/users/:id").get(authentificate, getUserController)
+app.route("/users/:id").delete(authentificate, deleteUserController)
 
-app.route("/posts/:id").get(getPostController)
-app.route("/posts/:id").post(updatePostController)
-app.route("/posts/:id").delete(deletePostController)
-app.route("/posts").get(getPostsListController)
-app.route("/posts/").post(createPostController)
+app.route("/posts/:id").get(authentificate, getPostController)
+app.route("/posts/:id").post(authentificate, updatePostController)
+app.route("/posts/:id").delete(authentificate, deletePostController)
+app.route("/posts").get(authentificate, getPostsListController)
+app.route("/posts/").post(authentificate, createPostController)
 
 app.listen(port, () => {
-   consola.success(`REST MVC API listening on port ${port}`)
+   consola.success(`REST MVC-like API listening on port ${port}`)
 })

@@ -6,7 +6,7 @@ Feel free to fork or get inspiration.
 
 ### How API works
 
-API enables consumer to manage account and account's blog posts.
+API enables consumer to manage account and account's blog posts. API is tested e2e with Vitest.
 
 #### API consumer can:
 
@@ -29,9 +29,10 @@ API enables consumer to manage account and account's blog posts.
 
 ### Tools used
 
--  TypeScript
+-  TypeScript with Zod schemas
 -  Express.js
 -  Postgres
 -  Prisma ORM
 -  Docker
--  Bun
+-  Bun as package manager
+-  Bun with Node support as runtime
