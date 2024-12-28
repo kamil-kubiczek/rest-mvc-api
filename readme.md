@@ -13,7 +13,6 @@ API enables consumer to manage account and account's blog posts.
 **Account**
 
 -  register with email and password
--  verify via email message
 -  login with email and password
 -  authentificate using cookie with JWT token
 -  refresh JWT token

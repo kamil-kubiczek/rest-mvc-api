@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express"
+import expressContext from "express-request-context"
 
 import consola from "consola"
 
@@ -14,13 +15,16 @@ import createPostController from "./controllers/posts/create"
 import deletePostController from "./controllers/posts/delete"
 import updatePostController from "./controllers/posts/update"
 
+import { logger } from "./middlewares/logger"
+import { authentificate } from "./middlewares/authentificate"
+import cookieParser from "cookie-parser"
+
 const app = express()
+
 const port = 3004
 
-const logger = function (req: Request, res: Response, next: NextFunction) {
-   consola.info("request - from", req.headers["user-agent"])
-   next()
-}
+app.use(cookieParser())
+app.use(expressContext())
 
 app.use(logger)
 

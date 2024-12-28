@@ -10,6 +10,7 @@ datasource db {
 model User {
   id           String        @id @default(uuid())
   name         String
+  password     String
   email        String        @unique
   updatedAt    DateTime      @updatedAt
   posts        Post[]
@@ -18,7 +19,7 @@ model User {
 
 model RefreshToken {
   token     String   @id
-  timestamp BigInt
+  createdAt BigInt
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String   @unique
