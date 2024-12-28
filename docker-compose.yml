@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+   database:
+      image: postgres:alpine
+      restart: always
+      ports:
+         - "5432:5432"
+      environment:
+         POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
+         POSTGRES_USER: ${DOCKER_POSTGRES_USER}
+         POSTGRES_DB: rest-mvc-api-database
+      volumes:
+         - /postgres/rest-mvc-api-database/:/var/lib/postgresql/data
+      healthcheck:
+         test: ["CMD-SHELL", "pg_isready -U postgres"]
+         interval: 10s
+         timeout: 5s
+         retries: 3
