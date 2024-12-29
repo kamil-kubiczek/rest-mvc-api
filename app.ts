@@ -10,6 +10,8 @@ import registerUserController from "./controllers/users/register"
 import deleteUserController from "./controllers/users/delete"
 import refreshTokenController from "./controllers/users/refreshToken"
 import loginUserController from "./controllers/users/login"
+import logoutUserController from "./controllers/users/logout"
+
 import getPostController from "./controllers/posts/get"
 import getPostsListController from "./controllers/posts/getList"
 import createPostController from "./controllers/posts/create"
@@ -37,6 +39,7 @@ app.get("/healthcheck", healthcheckController)
 
 app.route("/register").post(validateBody(registerSchema), registerUserController)
 app.route("/login").post(validateBody(loginSchema), loginUserController)
+app.route("/logout").post(authentificate, logoutUserController)
 app.route("/refresh-token").get(refreshTokenController)
 
 app.route("/users/:id").get(authentificate, getUserController)

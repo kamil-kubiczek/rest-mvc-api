@@ -7,6 +7,29 @@ declare global {
          API_PORT: string
       }
    }
+
+   namespace Express {
+      interface Request {
+         context: {
+            [key: string]: any
+            user: {
+               id: string
+               name: string
+               email: string
+            }
+         }
+      }
+      interface Response {
+         context: {
+            [key: string]: any
+            user: {
+               id: string
+               name: string
+               email: string
+            }
+         }
+      }
+   }
 }
 
 export {}
