@@ -9,17 +9,11 @@ export default async function (req: Request<{}, {}, { email: User["email"]; pass
    const { email, password } = req.body
    const query = new UserQuery()
 
-   const user = await query.readByEmailAndPassword({
-      email,
-      password
+   const user = await query.readByEmailWithPasswordHash({
+      email
    })
 
-   if (!user) {
-      res.status(401).json({ message: "Invalid credentials" })
-      return
-   }
-
-   if (!bcrypt.compareSync(password, user.password)) {
+   if (!user || (user && !bcrypt.compareSync(password, user.password))) {
       res.status(401).json({ message: "Invalid credentials" })
       return
    }
@@ -29,11 +23,19 @@ export default async function (req: Request<{}, {}, { email: User["email"]; pass
 
    const refreshTokenQuery = new RefreshTokenQuery()
 
+   const existingRefreshToken = await refreshTokenQuery.readByUserId(user.id)
+
+   if (existingRefreshToken) {
+      await refreshTokenQuery.delete(existingRefreshToken.token)
+   }
+
    await refreshTokenQuery.create({ token: refreshToken, userId: user.id, createdAt: BigInt(new Date().getTime()) })
 
    res.cookie("accessToken", accessToken, { httpOnly: true, sameSite: "none", secure: true })
 
    res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "none", secure: true })
+
+   delete (user as unknown as Partial<typeof user>).password
 
    res.status(200).json(user)
 }

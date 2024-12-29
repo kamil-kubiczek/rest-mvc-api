@@ -1,4 +1,4 @@
-import { RefreshToken } from "@prisma/client"
+import { RefreshToken, User } from "@prisma/client"
 import { prisma } from "../prisma/client"
 
 interface IRefreshTokenQuery {
@@ -6,6 +6,7 @@ interface IRefreshTokenQuery {
    readById(token: string): Promise<RefreshToken | null>
    readByUserId(id: string): Promise<RefreshToken | null>
    delete(token: string): Promise<void>
+   deleteByUserId(userId: RefreshToken["userId"]): Promise<void>
 }
 
 export default class RefreshTokenQuery implements IRefreshTokenQuery {
@@ -20,5 +21,8 @@ export default class RefreshTokenQuery implements IRefreshTokenQuery {
    }
    async delete(token: string) {
       await prisma.refreshToken.delete({ where: { token } })
+   }
+   async deleteByUserId(userId: RefreshToken["userId"]) {
+      await prisma.refreshToken.delete({ where: { userId } })
    }
 }
