@@ -18,6 +18,13 @@ export const authentificate = async function (req: Request, res: Response, next:
       return
    }
 
+   console.log("validatedToken", validatedToken)
+
+   if (!validatedToken.userId) {
+      res.status(401).json({ error: "Unauthorized. Token invalid or expired" })
+      return
+   }
+
    const userQuery = new UserQuery()
 
    const existingUser = await userQuery.readById(validatedToken.userId)

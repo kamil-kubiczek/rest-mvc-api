@@ -18,7 +18,15 @@ export function generateRefreshToken(params: { userId: User["id"]; expiresIn: st
 export function verifyAccessToken(token: string) {
    return <
       JwtPayload & {
-         id: User["id"]
+         userId: User["id"]
       }
    >jwt.verify(token, process.env.JSON_ACCESS_TOKEN_SECRET)
+}
+
+export function verifyRefreshToken(token: string) {
+   return <
+      JwtPayload & {
+         userId: User["id"]
+      }
+   >jwt.verify(token, process.env.JSON_REFRESH_TOKEN_SECRET)
 }

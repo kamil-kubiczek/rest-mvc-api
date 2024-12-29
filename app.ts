@@ -40,7 +40,7 @@ app.get("/healthcheck", healthcheckController)
 app.route("/register").post(validateBody(registerSchema), registerUserController)
 app.route("/login").post(validateBody(loginSchema), loginUserController)
 app.route("/logout").post(authentificate, logoutUserController)
-app.route("/refresh-token").get(refreshTokenController)
+app.route("/refresh-token").post(refreshTokenController)
 
 app.route("/users/:id").get(authentificate, getUserController)
 app.route("/users/:id").delete(authentificate, deleteUserController)
