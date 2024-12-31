@@ -46,7 +46,7 @@ app.route("/users/:id").get(authentificate, getUserController)
 app.route("/users/:id").delete(authentificate, deleteUserController)
 
 app.route("/posts/:id").get(authentificate, getPostController)
-app.route("/posts/:id").post(authentificate, updatePostController)
+app.route("/posts/:id").put(authentificate, updatePostController)
 app.route("/posts/:id").delete(authentificate, deletePostController)
 app.route("/posts").get(authentificate, getPostsListController)
 app.route("/posts/").post(authentificate, createPostController)

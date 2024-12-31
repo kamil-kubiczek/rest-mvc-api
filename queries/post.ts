@@ -2,7 +2,7 @@ import { Post, Prisma } from "@prisma/client"
 import { prisma } from "../prisma/client"
 
 export type CreatePostQueryInput = Omit<Post, "updatedAt" | "id">
-export type UpdatePostQueryInput = Omit<Post, "updatedAt" | "id">
+export type UpdatePostQueryInput = Partial<Omit<Post, "updatedAt" | "id">>
 
 interface IPostQuery {
    readList(where: Prisma.PostWhereInput): Promise<Post[]>

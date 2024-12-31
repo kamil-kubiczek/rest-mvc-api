@@ -7,9 +7,22 @@ export default async function (req: Request<{ id: string }, {}, {}>, res: Respon
 
       const query = new PostQuery()
 
+      const post = await query.readById(id)
+
+      if (!post) {
+         res.status(404).send()
+         return
+      }
+
+      if (post.userId !== req.context.user.id) {
+         res.status(401).send("Unauthorized")
+         return
+      }
+
       await query.delete(id)
 
-      res.status(200)
+      res.status(200).send()
+      return
    } catch (error) {
       res.status(500).json({ error: "Internal Server Error" })
    }

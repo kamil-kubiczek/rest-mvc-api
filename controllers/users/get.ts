@@ -9,14 +9,17 @@ export default async function (req: Request<{ id: string }, {}, {}>, res: Respon
    const userQuery = new UserQuery()
 
    if (user.id !== id) {
-      return res.status(401).send("Unauthorized")
+      res.status(401).send("Unauthorized")
+      return
    }
 
    const userResult = await userQuery.readById(id)
 
    if (!userResult) {
-      return res.status(404).send()
+      res.status(404).send()
+      return
    }
 
-   return res.status(200).send(userResult)
+   res.status(200).send(userResult)
+   return
 }

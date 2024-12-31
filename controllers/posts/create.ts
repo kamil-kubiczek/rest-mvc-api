@@ -1,9 +1,11 @@
 import { Request, Response } from "express"
 import PostQuery, { CreatePostQueryInput } from "../../queries/post"
 
-export default async function (req: Request<{}, {}, CreatePostQueryInput>, res: Response) {
+export default async function (req: Request<{}, {}, Omit<CreatePostQueryInput, "userId">>, res: Response) {
    try {
-      const { title, content, published, userId } = req.body
+      const { title, content, published } = req.body
+
+      const userId = req.context.user.id
 
       const query = new PostQuery()
 

@@ -9,7 +9,8 @@ export default async function (req: Request, res: Response) {
    const userQuery = new UserQuery()
 
    if (user.id !== id) {
-      return res.status(401).send("Unauthorized")
+      res.status(401).send("Unauthorized")
+      return
    }
 
    res.cookie("accessToken", null, { httpOnly: true, sameSite: "none", secure: true })
@@ -17,5 +18,6 @@ export default async function (req: Request, res: Response) {
 
    await userQuery.delete(id)
 
-   return res.status(200).send()
+   res.status(200).send()
+   return
 }
