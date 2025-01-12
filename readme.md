@@ -1,14 +1,12 @@
-### About project
+## About project
 
 This project is example of small REST API based on Express.js and Prisma ORM. It's not production ready but can be helpful for you. **Feel free to fork or get inspired.**
 
-**Postman collection:** [Click here](https://www.postman.com/restaurant-backend-developers-team/rest-mvc-like-api/invite?wid=85118222-57ae-45d1-8396-1c45bf3be135) and remember select development environment
 
-### How API works
+## Features
 
-API enables consumer to manage account and account's blog posts. API is tested in Postman.
+API enables consumer to manage account and account's blog posts.
 
-#### API consumer can:
 
 **Account**
 
@@ -27,7 +25,7 @@ API enables consumer to manage account and account's blog posts. API is tested i
 -  unpublish post
 -  delete post
 
-### Tools used
+## Tools used
 
 -  TypeScript with Zod schemas
 -  Express.js
@@ -38,6 +36,24 @@ API enables consumer to manage account and account's blog posts. API is tested i
 -  Bun with Node support as runtime
 -  Manual testing with Postman
 
-### Start app
+ 
+## Installation
 
-In CLI type `bun app.ts` in default directory.
+Install npm dependencies using bun: 
+```
+bun install
+```
+
+ 
+## How to start API
+
+In root directory in CLI type 
+```
+bun app.ts
+```
+Now API works!
+
+
+## Testing
+API is tested in Postman.
+**Postman collection:** [Click here](https://www.postman.com/restaurant-backend-developers-team/rest-mvc-like-api/invite?wid=85118222-57ae-45d1-8396-1c45bf3be135) - remember to select `development` environment
