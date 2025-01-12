@@ -3,6 +3,11 @@
 This project is example of small REST API based on Express.js and Prisma ORM. It's not production ready but can be helpful for you. **Feel free to fork or get inspired.**
 
 
+**Project status: 🟢Ready to use**
+
+**Warning: 🟡Code has not been tested production**
+
+
 ## Features
 
 API enables consumer to manage account and account's blog posts.
